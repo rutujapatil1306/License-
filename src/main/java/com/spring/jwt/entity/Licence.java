@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Data
 @Entity
-public class Administrator {
+public class Licence {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -15,5 +15,8 @@ public class Administrator {
 
     @Column(nullable = false)
     private String licenseName;
+
+    @ManyToOne
+    private  Customer customer;
 
 }
