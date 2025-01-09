@@ -1,7 +1,7 @@
 package com.spring.jwt.controller;
 
-import com.spring.jwt.Interfaces.IAdministrator;
-import com.spring.jwt.dto.AdministratorDTO;
+import com.spring.jwt.Interfaces.ILicence;
+import com.spring.jwt.dto.LicenceDTO;
 import com.spring.jwt.utils.BaseResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,16 +16,16 @@ import java.util.List;
 @RestController
 @RequestMapping("api/administrator")
 
-public class AdministratorController {
+public class LicenceController {
 
     @Autowired
-    private IAdministrator iAdministrator;
+    private ILicence iAdministrator;
 
     @PostMapping("/saveLicense")
-    public ResponseEntity<BaseResponseDTO> saveLicense(AdministratorDTO administratorDTO)
+    public ResponseEntity<BaseResponseDTO> saveLicense(LicenceDTO administratorDTO)
     {
         try {
-            AdministratorDTO administratorDTO1 = iAdministrator.saveLicense(administratorDTO);
+            LicenceDTO administratorDTO1 = iAdministrator.saveLicense(administratorDTO);
             BaseResponseDTO response = new BaseResponseDTO("SUCCESS", "Application Added");
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         }catch (Exception e){
@@ -38,7 +38,7 @@ public class AdministratorController {
     public ResponseEntity<BaseResponseDTO> getAllLicense ()
     {
         try{
-            List<AdministratorDTO> administratorDTOList = iAdministrator.getAllLicense();
+            List<LicenceDTO> administratorDTOList = iAdministrator.getAllLicense();
             BaseResponseDTO response = new BaseResponseDTO("SUCCESS", "List of All License");
             return ResponseEntity.status(HttpStatus.FOUND).body(response);
         }catch (Exception e){
