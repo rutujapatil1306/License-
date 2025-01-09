@@ -20,7 +20,7 @@ public class LicenceController {
     private ILicence iAdministrator;
 
     @PostMapping("/saveLicense")
-    public ResponseEntity<BaseResponseDTO> saveLicense(LicenceDTO administratorDTO)
+    public ResponseEntity<BaseResponseDTO> saveLicense(@RequestBody  LicenceDTO administratorDTO)
     {
         try {
             LicenceDTO administratorDTO1 = iAdministrator.saveLicense(administratorDTO);
