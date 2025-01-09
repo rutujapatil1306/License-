@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.UUID;
 
 @Data
-public class AdministratorDTO {
+public class LicenceDTO {
 
     private UUID licenseID;
     private String licenseName;
