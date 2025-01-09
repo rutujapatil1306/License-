@@ -3,6 +3,7 @@ package com.spring.jwt.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -20,4 +21,8 @@ public class Customer {
     @Column(name = "status", nullable = false)
     private String status = "Pending";
 
+    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    private List<Licence> licence;
+
+//    mappedBy = "invoice1", fetch = FetchType.EAGER, cascade = CascadeType.ALL
 }
