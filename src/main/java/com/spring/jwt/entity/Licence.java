@@ -16,7 +16,7 @@ public class Licence {
     @Column(nullable = false)
     private String licenseName;
 
-    @ManyToOne
-    private  Customer customer;
+//    @ManyToOne
+//    private  Customer customer;
 
 }

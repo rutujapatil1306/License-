@@ -9,5 +9,5 @@ public class LicenceDTO {
 
     private UUID licenseID;
     private String licenseName;
-    private CustomerDTO customerDTO;
+   // private CustomerDTO customerDTO;
 }

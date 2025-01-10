@@ -5,17 +5,22 @@ import com.spring.jwt.dto.LicenceDTO;
 import com.spring.jwt.entity.Licence;
 import com.spring.jwt.mapper.LicenceMapper;
 import com.spring.jwt.repository.LicenceRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class LicenceServiceImpl implements ILicence {
 
     @Autowired
     private LicenceRepository administratorRepository;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     public LicenceDTO saveLicense(LicenceDTO administratorDTO) {
@@ -36,5 +41,13 @@ public class LicenceServiceImpl implements ILicence {
         }
 
         return dtoList;
+    }
+
+    @Override
+    public LicenceDTO getById(UUID id) {
+
+        Licence l=administratorRepository.getById(id);
+        LicenceDTO li=modelMapper.map(l,LicenceDTO.class);
+        return li;
     }
 }
