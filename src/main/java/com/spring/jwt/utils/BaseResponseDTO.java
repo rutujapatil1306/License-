@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class BaseResponseDTO {
 
+
     private String code;
     private String message;
 

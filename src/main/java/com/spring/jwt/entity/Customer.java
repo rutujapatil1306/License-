@@ -30,9 +30,9 @@ public class Customer {
     @Email(message = "Email must be a valid format.")
     private String email;
 
-//    @Enumerated(EnumType.STRING)
-//    @Column(name = "license_option") // option is reserved keyword in MYSql , so it gets confused
-//    private Option option; // NEW_LICENSE , RENEWAL
+    @Enumerated(EnumType.STRING)
+    @Column(name = "license_option") // option is reserved keyword in MYSql , so it gets confused
+    private Option option; // NEW_LICENSE , RENEWAL
 
     @Column(name = "status", nullable = false)
     private String status = "Pending";

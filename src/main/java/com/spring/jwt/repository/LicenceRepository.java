@@ -8,4 +8,6 @@ import java.util.UUID;
 
 @Repository
 public interface LicenceRepository extends JpaRepository<Licence, UUID> {
+
+    Licence getById(UUID licenceId);
 }
