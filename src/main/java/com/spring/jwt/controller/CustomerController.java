@@ -5,12 +5,12 @@ import com.spring.jwt.dto.CustomerDTO;
 import com.spring.jwt.exception.BaseException;
 import com.spring.jwt.utils.BaseResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.cassandra.CassandraProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/customer")
@@ -35,5 +35,17 @@ public class CustomerController {
 
 
 
+    @GetMapping("/creatingLicence")
+     public ResponseEntity<BaseResponseDTO> createStatus(@RequestParam UUID customerId,UUID liceneceId){
+        try{
+            CustomerDTO dto=icustomer.createStatus(customerId,liceneceId);
+            BaseResponseDTO responseDTO=new BaseResponseDTO(dto,"SUCCESS","successfully go to the status");
+            return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
+        }
+        catch(Exception e){
+            BaseResponseDTO errorResponseDTO = new BaseResponseDTO(e.getMessage(),"ERROR", "List of License not Found: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponseDTO);
+                    }
+    }
 
 }

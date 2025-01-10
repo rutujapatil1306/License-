@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import java.util.UUID;
 
-public interface CustomerRepository extends JpaRepository< Customer,UUID> {
+public interface CustomerRepository extends JpaRepository<Customer,UUID> {
 
   @Query("SELECT c.mobileNumber FROM Customer c")
   List<String> getAllMobileNumbers();
