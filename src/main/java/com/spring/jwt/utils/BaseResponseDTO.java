@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class BaseResponseDTO {
-
-
+    private Object data;
     private String code;
     private String message;
+
 
 }
