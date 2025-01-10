@@ -37,7 +37,7 @@ public class CustomerDTO {
     private String pincode;
 
     // private String status ;
-    private Option option;
+    private String option;
 
     private List<LicenceDTO> licenceDTOS;
 }

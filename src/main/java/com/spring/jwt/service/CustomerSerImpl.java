@@ -34,6 +34,7 @@ public class CustomerSerImpl implements ICustomer {
                 if (customer.getMobileNumber() == customerRepository.getAllMobileNumbers().get(i)) {
                     throw new RuntimeException("User Already Exist");
                 }
+                customer.setOption(Option.NO_STATUS);
             }
         }
         Customer customer1 = customerRepository.save(customer);
