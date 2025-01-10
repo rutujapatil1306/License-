@@ -46,7 +46,6 @@ public class LicenceController {
 
     }
 
-
     @GetMapping("/getById")
      public ResponseEntity<BaseResponseDTO> getById(@RequestParam UUID id){
        try{

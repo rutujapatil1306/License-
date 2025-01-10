@@ -30,8 +30,15 @@ public class CustomerDTO {
     private String email;
 
 
+    private String city;
+
+    private String area;
+
+    private String pincode;
+
     // private String status ;
     private Option option;
+
     private List<LicenceDTO> licenceDTOS;
 }
 
