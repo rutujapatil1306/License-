@@ -31,7 +31,7 @@ public class CustomerSerImpl implements ICustomer {
         Customer customer = modelMapper.map(customerDTO, Customer.class);
         if (customerRepository.getAllMobileNumbers() != null) {
             for (int i = 0; i < customerRepository.getAllMobileNumbers().size(); i++) {
-                if (customer.getMobileNumber() == customerRepository.getAllMobileNumbers().get(i)) {
+                if (customer.getMobileNumber() .equals(customerRepository.getAllMobileNumbers().get(i))) {
                     throw new RuntimeException("User Already Exist");
                 }
                 customer.setOption(Option.NO_STATUS);
