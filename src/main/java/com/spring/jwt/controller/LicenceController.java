@@ -24,10 +24,10 @@ public class LicenceController {
     {
         try {
             LicenceDTO administratorDTO1 = iAdministrator.saveLicense(administratorDTO);
-            BaseResponseDTO response = new BaseResponseDTO("SUCCESS", "Application Added");
+            BaseResponseDTO response = new BaseResponseDTO(administratorDTO1,"SUCCESS", "Application Added");
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         }catch (Exception e){
-            BaseResponseDTO errorResponse = new BaseResponseDTO("ERROR", "An error occurred: " + e.getMessage());
+            BaseResponseDTO errorResponse = new BaseResponseDTO(e.getMessage(),"ERROR", "An error occurred: ");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
@@ -37,10 +37,10 @@ public class LicenceController {
     {
         try{
             List<LicenceDTO> administratorDTOList = iAdministrator.getAllLicense();
-            BaseResponseDTO response = new BaseResponseDTO("SUCCESS", "List of All License");
+            BaseResponseDTO response = new BaseResponseDTO(administratorDTOList,"SUCCESS", "List of All License");
             return ResponseEntity.status(HttpStatus.FOUND).body(response);
         }catch (Exception e){
-            BaseResponseDTO errorResponseDTO = new BaseResponseDTO("ERROR", "List of License not Found: " + e.getMessage());
+            BaseResponseDTO errorResponseDTO = new BaseResponseDTO(e.getMessage(),"ERROR","List of License not Found:");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponseDTO);
         }
 
@@ -51,11 +51,11 @@ public class LicenceController {
      public ResponseEntity<BaseResponseDTO> getById(@RequestParam UUID id){
        try{
            LicenceDTO adminstrator=iAdministrator.getById(id);
-           BaseResponseDTO response=new BaseResponseDTO("Success","Licence get Successfully");
+           BaseResponseDTO response=new BaseResponseDTO(adminstrator,"Success","Licence get Successfully");
            return ResponseEntity.status(HttpStatus.FOUND).body(response);
        }
        catch(Exception e){
-           BaseResponseDTO errorResponseDTO = new BaseResponseDTO("ERROR", "List of License not Found: " + e.getMessage());
+           BaseResponseDTO errorResponseDTO = new BaseResponseDTO(e.getMessage(),"ERROR", "List of License not Found");
            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponseDTO);
 
        }

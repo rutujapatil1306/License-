@@ -23,11 +23,11 @@ public class CustomerController {
     public ResponseEntity<BaseResponseDTO> saveCustomer(@RequestBody CustomerDTO customerDTO ){
         try{
             CustomerDTO customer=icustomer.saveCustomer(customerDTO);
-            BaseResponseDTO responseDTO=new BaseResponseDTO("Success","successfully get this ");
+            BaseResponseDTO responseDTO=new BaseResponseDTO(customer,"Success","successfully get this ");
             return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
         }
         catch(Exception e){
-            BaseResponseDTO errorResponseDTO = new BaseResponseDTO("ERROR", "List of License not Found: " + e.getMessage());
+            BaseResponseDTO errorResponseDTO = new BaseResponseDTO( e.getMessage(),"ERROR", "List of License not Found: ");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponseDTO);
         }
 

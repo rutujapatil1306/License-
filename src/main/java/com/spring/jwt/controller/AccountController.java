@@ -26,11 +26,11 @@ public class AccountController {
 
         try {
            BaseResponseDTO response= userService.registerAccount(registerDto);
-            return ResponseEntity.status(HttpStatus.OK).body(new BaseResponseDTO("Successful",response.getMessage()));
+            return ResponseEntity.status(HttpStatus.OK).body(new BaseResponseDTO(response,"Successful",response.getMessage()));
         }catch (UserAlreadyExistException e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new BaseResponseDTO("Unsuccessful","User already exists"));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new BaseResponseDTO(e.getMessage(),"Unsuccessful","User already exists"));
         }catch (BaseException e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new BaseResponseDTO("Unsuccessful","Invalid role"));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new BaseResponseDTO(e.getMessage(),"Unsuccessful","Invalid role"));
         }
     }
 }
