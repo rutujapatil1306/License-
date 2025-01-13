@@ -28,14 +28,14 @@ public class CustomerController {
         }
         catch(Exception e){
             BaseResponseDTO errorResponseDTO = new BaseResponseDTO( e.getMessage(),"ERROR", "List of License not Found: ");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponseDTO);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponseDTO);
         }
 
     }
 
 
 
-    @GetMapping("/creatingLicence")
+    @PostMapping ("/creatingLicence")
      public ResponseEntity<BaseResponseDTO> createStatus(@RequestParam UUID customerId,UUID liceneceId){
         try{
             CustomerDTO dto=icustomer.createStatus(customerId,liceneceId);
@@ -47,5 +47,6 @@ public class CustomerController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponseDTO);
                     }
     }
+
 
 }

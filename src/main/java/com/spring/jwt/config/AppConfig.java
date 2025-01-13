@@ -90,6 +90,7 @@ public class AppConfig {
                 .requestMatchers("/dealer/**").hasAnyAuthority("DEALER", "ADMIN")
                 .requestMatchers("/car/**").hasAnyAuthority("DEALER", "ADMIN")
                 .requestMatchers("/api/administrator/**").permitAll()
+                .requestMatchers("/api/customer/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .authenticationManager(manager)

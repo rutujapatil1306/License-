@@ -11,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -31,9 +32,11 @@ public class CustomerSerImpl implements ICustomer {
         Customer customer = modelMapper.map(customerDTO, Customer.class);
         if (customerRepository.getAllMobileNumbers() != null) {
             for (int i = 0; i < customerRepository.getAllMobileNumbers().size(); i++) {
-                if (customer.getMobileNumber() == customerRepository.getAllMobileNumbers().get(i)) {
+                if (customer.getMobileNumber() .equals( customerRepository.getAllMobileNumbers().get(i)) )  {
                     throw new RuntimeException("User Already Exist");
                 }
+               // Licence licence=repository.getById(licenceId);
+
                 customer.setOption(Option.NO_STATUS);
             }
         }
@@ -47,6 +50,8 @@ public class CustomerSerImpl implements ICustomer {
         Licence licence=repository.getById(licenceId);
         if(customer != null || licence!=null){
             customer.setOption(Option.PENDING);
+            customer.setLicence((List<Licence>) licence);
+
         }
         return modelMapper.map(customer,CustomerDTO.class);
 

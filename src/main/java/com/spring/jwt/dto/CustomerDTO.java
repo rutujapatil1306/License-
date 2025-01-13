@@ -39,7 +39,7 @@ public class CustomerDTO {
     // private String status ;
     private String option;
 
-    private List<LicenceDTO> licenceDTOS;
+    private List<LicenceDTO> licence;
 }
 
 
