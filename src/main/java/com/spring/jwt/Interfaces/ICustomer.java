@@ -8,4 +8,6 @@ public interface ICustomer {
     CustomerDTO saveCustomer(CustomerDTO customerDTO);
 
     CustomerDTO createStatus(UUID customerId,UUID licenceId);
+
+    CustomerDTO getCustomerWithLicenses(UUID customerId);
 }
