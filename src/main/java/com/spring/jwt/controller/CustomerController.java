@@ -2,10 +2,8 @@ package com.spring.jwt.controller;
 
 import com.spring.jwt.Interfaces.ICustomer;
 import com.spring.jwt.dto.CustomerDTO;
-import com.spring.jwt.exception.BaseException;
 import com.spring.jwt.utils.BaseResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.cassandra.CassandraProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,9 +34,9 @@ public class CustomerController {
 
 
     @PostMapping ("/creatingLicence")
-     public ResponseEntity<BaseResponseDTO> createStatus(@RequestParam UUID customerId,UUID liceneceId){
+     public ResponseEntity<BaseResponseDTO> createStatus(@RequestParam UUID customerId,UUID licenseID){
         try{
-            CustomerDTO dto=icustomer.createStatus(customerId,liceneceId);
+            CustomerDTO dto=icustomer.createStatus(customerId,licenseID);
             BaseResponseDTO responseDTO=new BaseResponseDTO(dto,"SUCCESS","successfully go to the status");
             return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
         }

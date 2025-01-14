@@ -11,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -46,15 +47,13 @@ public class CustomerSerImpl implements ICustomer {
 
     @Override
     public CustomerDTO createStatus(UUID customerId,UUID licenceId) {
-        Customer customer=customerRepository.getById(customerId);
-        Licence licence=repository.getById(licenceId);
-        if(customer != null || licence!=null){
-            customer.setOption(Option.PENDING);
-            customer.setLicence((List<Licence>) licence);
-
-        }
-        return modelMapper.map(customer,CustomerDTO.class);
-
+        Customer customer=customerRepository.findById(customerId).orElseThrow(()->new RuntimeException("ID Not Found"));
+        Licence licence=repository.findById(licenceId).orElseThrow(()->new RuntimeException("ID Not Found"));
+        customer.setOption(Option.PENDING);
+        List<Licence> licences = new ArrayList<>();
+        licences.add(licence);
+        customer.setLicence(licences);
+        return modelMapper.map(customer, CustomerDTO.class);
     }
 
 
