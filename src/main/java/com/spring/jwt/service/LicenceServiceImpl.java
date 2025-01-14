@@ -49,4 +49,26 @@ public class LicenceServiceImpl implements ILicence {
         LicenceDTO li=modelMapper.map(l,LicenceDTO.class);
         return li;
     }
+
+    @Override
+    public LicenceDTO updateLicence(UUID licenseID, LicenceDTO licenceDTO) {
+        Licence licence= modelMapper.map(licenceDTO,Licence.class);
+        Licence findedLicence= administratorRepository.findById(licenseID).orElseThrow(() -> new RuntimeException("Id Not Found Exception"));
+
+        if(licenceDTO.getLicenseName()!=null){
+        licence.setLicenseName(licenceDTO.getLicenseName());
+        }
+        Licence UpdatedLicense=administratorRepository.save(findedLicence);
+        return modelMapper.map(licence,LicenceDTO.class);
+    }
+
+    @Override
+    public LicenceDTO deleteLicence(UUID licenceId) {
+        Licence licence= administratorRepository.findById(licenceId).
+                orElseThrow(()-> new RuntimeException("Id Not Found"));
+        administratorRepository.delete(licence);
+        return null;
+    }
+
+
 }
