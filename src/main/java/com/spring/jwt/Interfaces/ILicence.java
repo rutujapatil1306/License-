@@ -12,4 +12,8 @@ public interface ILicence {
     List<LicenceDTO> getAllLicense();
 
     LicenceDTO getById(UUID id);
+
+    LicenceDTO updateLicence(UUID licenseID, LicenceDTO licenceDTO);
+
+    LicenceDTO deleteLicence(UUID licenceId);
 }
