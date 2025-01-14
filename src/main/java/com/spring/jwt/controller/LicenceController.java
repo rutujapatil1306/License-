@@ -65,10 +65,10 @@ public class LicenceController {
     public ResponseEntity<BaseResponseDTO> updateLicence(@RequestParam UUID licenseID, @RequestBody LicenceDTO licenceDTO){
         try {
             LicenceDTO licenceDTO1 = iAdministrator.updateLicence(licenseID, licenceDTO);
-            BaseResponseDTO LicenceUpdate = new BaseResponseDTO("SUCCESS TO UPDATE", "License Update Successfully");
+            BaseResponseDTO LicenceUpdate = new BaseResponseDTO(licenceDTO1,"SUCCESS TO UPDATE", "License Update Successfully");
             return ResponseEntity.status(HttpStatus.FOUND).body(LicenceUpdate);
         }catch (Exception e){
-            BaseResponseDTO LicenceUpdate= new BaseResponseDTO("ERROR","Failed To Update License");
+            BaseResponseDTO LicenceUpdate= new BaseResponseDTO("Object","ERROR","Failed To Update License");
             return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(LicenceUpdate);
         }
     }
@@ -76,10 +76,10 @@ public class LicenceController {
     public ResponseEntity<BaseResponseDTO> deleteById(@RequestParam UUID licenceId){
         try {
             LicenceDTO licence = iAdministrator.deleteLicence(licenceId);
-            BaseResponseDTO baseResponseDTO = new BaseResponseDTO("SUCCESS", "Success to Delete");
+            BaseResponseDTO baseResponseDTO = new BaseResponseDTO(licence,"SUCCESS", "Success to Delete");
             return ResponseEntity.status(HttpStatus.OK).body(baseResponseDTO);
         }catch (Exception e){
-            BaseResponseDTO responseDTO= new BaseResponseDTO("ERROR","Failed To Delete");
+            BaseResponseDTO responseDTO= new BaseResponseDTO(e.getMessage(),"ERROR","Failed To Delete");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDTO);
 
         }
