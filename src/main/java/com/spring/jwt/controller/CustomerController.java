@@ -2,8 +2,10 @@ package com.spring.jwt.controller;
 
 import com.spring.jwt.Interfaces.ICustomer;
 import com.spring.jwt.dto.CustomerDTO;
+import com.spring.jwt.exception.BaseException;
 import com.spring.jwt.utils.BaseResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.cassandra.CassandraProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,24 +28,49 @@ public class CustomerController {
         }
         catch(Exception e){
             BaseResponseDTO errorResponseDTO = new BaseResponseDTO( e.getMessage(),"ERROR", "List of License not Found: ");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponseDTO);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponseDTO);
         }
 
     }
 
+//    @GetMapping("/creatingLicence")
+//     public ResponseEntity<BaseResponseDTO> createStatus(@RequestParam UUID customerId,
+//                                                         @RequestParam UUID liceneceId){
+//        try{
+//            CustomerDTO dto=icustomer.createStatus(customerId,liceneceId);
+//            BaseResponseDTO responseDTO=new BaseResponseDTO(dto,"SUCCESS","successfully go to the status");
+//            return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
+//        }
+//        catch(Exception e){
+//            BaseResponseDTO errorResponseDTO = new BaseResponseDTO(e.getMessage(),"ERROR", "List of License not Found: " + e.getMessage());
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponseDTO);
+//        }
+//    }
 
 
-    @PostMapping ("/creatingLicence")
-     public ResponseEntity<BaseResponseDTO> createStatus(@RequestParam UUID customerId,UUID licenseID){
-        try{
-            CustomerDTO dto=icustomer.createStatus(customerId,licenseID);
-            BaseResponseDTO responseDTO=new BaseResponseDTO(dto,"SUCCESS","successfully go to the status");
-            return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
+    @GetMapping("/getCustomerWithLicenses")
+    public ResponseEntity<BaseResponseDTO> getCustomerWithLicenses(@RequestParam UUID customerId) {
+        try {
+            CustomerDTO customerDTO = icustomer.getCustomerWithLicenses(customerId);
+            BaseResponseDTO response = new BaseResponseDTO(customerDTO, "SUCCESS", "Customer and licenses retrieved successfully");
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            BaseResponseDTO errorResponse = new BaseResponseDTO(e.getMessage(), "ERROR", "Customer not found with ID: " + customerId);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
         }
-        catch(Exception e){
-            BaseResponseDTO errorResponseDTO = new BaseResponseDTO(e.getMessage(),"ERROR", "List of License not Found: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponseDTO);
-                    }
+    }
+
+    @PatchMapping("/assignLicence")
+    public ResponseEntity<BaseResponseDTO> assignLicenceToCustomer(@RequestParam UUID customerId,
+                                                                   @RequestParam UUID licenceId) {
+        try {
+            CustomerDTO updatedCustomer = icustomer.assignLicenceAndSetStatus(customerId, licenceId);
+            BaseResponseDTO responseDTO = new BaseResponseDTO(updatedCustomer, "SUCCESS", "Licence assigned and status updated to PENDING.");
+            return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
+        } catch (RuntimeException e) {
+            BaseResponseDTO errorResponseDTO = new BaseResponseDTO(null, "ERROR", "Operation failed: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponseDTO);
+        }
     }
 
 

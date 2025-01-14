@@ -2,6 +2,7 @@ package com.spring.jwt.dto;
 
 import com.spring.jwt.entity.Licence;
 import com.spring.jwt.entity.Option;
+import com.spring.jwt.entity.Status;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -29,15 +30,15 @@ public class CustomerDTO {
     @Email(message = "Email must be a valid format.")
     private String email;
 
-
     private String city;
 
     private String area;
 
     private String pincode;
 
-    // private String status ;
-    private String option;
+    private Option option;
+
+    private Status status;
 
     private List<LicenceDTO> licence;
 }

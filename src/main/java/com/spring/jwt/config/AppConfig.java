@@ -37,7 +37,6 @@ public class AppConfig {
     @Autowired
     JwtConfig jwtConfig;
 
-
     @Autowired
     private JwtService jwtService;
 
@@ -46,16 +45,13 @@ public class AppConfig {
         return new JwtConfig();
     }
 
-
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){
-
         return new BCryptPasswordEncoder();
     }
 
     @Bean
     public UserDetailsService userDetailsService(){
-
         return new UserDetailsServiceCustom();
     }
 

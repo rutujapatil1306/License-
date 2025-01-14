@@ -45,7 +45,6 @@ public class LicenceServiceImpl implements ILicence {
 
     @Override
     public LicenceDTO getById(UUID id) {
-
         Licence l=administratorRepository.getById(id);
         LicenceDTO li=modelMapper.map(l,LicenceDTO.class);
         return li;

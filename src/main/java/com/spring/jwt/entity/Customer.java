@@ -30,12 +30,21 @@ public class Customer {
     @Email(message = "Email must be a valid format.")
     private String email;
 
+    @Column(nullable = false)
+    private String city;
+
+    @Column(nullable = false)
+    private String area;
+
+    @Column(nullable = false)
+    private String pincode;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "license_option") // option is reserved keyword in MYSql , so it gets confused
   private Option option; // NEW_LICENSE , RENEWAL
 
-    @Column(name = "status", nullable = false)
-    private String status = "Pending";
+    @Enumerated(EnumType.STRING)
+    private Status status ;
 
     @OneToMany( fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<Licence> licence;
