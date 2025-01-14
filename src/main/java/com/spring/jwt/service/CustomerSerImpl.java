@@ -6,6 +6,7 @@ import com.spring.jwt.dto.LicenceDTO;
 import com.spring.jwt.entity.Customer;
 import com.spring.jwt.entity.Licence;
 import com.spring.jwt.entity.Option;
+import com.spring.jwt.entity.Status;
 import com.spring.jwt.repository.CustomerRepository;
 import com.spring.jwt.repository.LicenceRepository;
 import org.modelmapper.ModelMapper;
@@ -27,7 +28,7 @@ public class CustomerSerImpl implements ICustomer {
     private CustomerRepository customerRepository;
 
     @Autowired
-    private LicenceRepository repository;
+    private LicenceRepository licenceRepository;
 
     @Override
     public CustomerDTO saveCustomer(CustomerDTO customerDTO) {
@@ -38,23 +39,23 @@ public class CustomerSerImpl implements ICustomer {
                 if (customer.getMobileNumber() .equals(customerRepository.getAllMobileNumbers().get(i))) {
                     throw new RuntimeException("User Already Exist");
                 }
-                customer.setOption(Option.NO_STATUS);
+                customer.setStatus(Status.NO_STATUS);
             }
         }
         Customer customer1 = customerRepository.save(customer);
         return modelMapper.map(customer1, CustomerDTO.class);
     }
 
-    @Override
-    public CustomerDTO createStatus(UUID customerId,UUID licenceId) {
-        Customer customer=customerRepository.getById(customerId);
-        Licence licence=repository.getById(licenceId);
-        if(customer != null || licence!=null){
-            customer.setOption(Option.PENDING);
-        }
-        return modelMapper.map(customer,CustomerDTO.class);
+//    @Override
+//    public CustomerDTO createStatus(UUID customerId,UUID licenceId) {
+//        Customer customer=customerRepository.getById(customerId);
+//        Licence licence=licenceRepository.getById(licenceId);
+//        if(customer != null || licence!=null){
+//            customer.setOption(Option.PENDING);
+//        }
+//        return modelMapper.map(customer,CustomerDTO.class);
+//    }
 
-    }
     @Override
     public CustomerDTO getCustomerWithLicenses(UUID customerId) {
 
@@ -68,11 +69,27 @@ public class CustomerSerImpl implements ICustomer {
             LicenceDTO licenceDTO = modelMapper.map(licence, LicenceDTO.class);
             licenceDTOs.add(licenceDTO);
         }
-
         customerDTO.setLicenceDTOS(licenceDTOs);
-
         return customerDTO;
     }
+
+    @Override
+    public CustomerDTO assignLicenceAndSetStatus(UUID customerId, UUID licenceId) {
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new RuntimeException("Customer not found with ID: " + customerId));
+
+        Licence licence = licenceRepository.findById(licenceId)
+                .orElseThrow(() -> new RuntimeException("Licence not found with ID: " + licenceId));
+
+        if (customer.getLicence() == null) {
+            customer.setLicence(new ArrayList<>());
+        }
+        customer.getLicence().add(licence);
+        customer.setStatus(Status.PENDING);
+        Customer updatedCustomer = customerRepository.save(customer);
+        return modelMapper.map(updatedCustomer, CustomerDTO.class);
+    }
+
 
 
 

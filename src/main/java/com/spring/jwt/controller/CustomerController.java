@@ -33,18 +33,19 @@ public class CustomerController {
 
     }
 
-    @GetMapping("/creatingLicence")
-     public ResponseEntity<BaseResponseDTO> createStatus(@RequestParam UUID customerId,UUID liceneceId){
-        try{
-            CustomerDTO dto=icustomer.createStatus(customerId,liceneceId);
-            BaseResponseDTO responseDTO=new BaseResponseDTO(dto,"SUCCESS","successfully go to the status");
-            return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
-        }
-        catch(Exception e){
-            BaseResponseDTO errorResponseDTO = new BaseResponseDTO(e.getMessage(),"ERROR", "List of License not Found: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponseDTO);
-        }
-    }
+//    @GetMapping("/creatingLicence")
+//     public ResponseEntity<BaseResponseDTO> createStatus(@RequestParam UUID customerId,
+//                                                         @RequestParam UUID liceneceId){
+//        try{
+//            CustomerDTO dto=icustomer.createStatus(customerId,liceneceId);
+//            BaseResponseDTO responseDTO=new BaseResponseDTO(dto,"SUCCESS","successfully go to the status");
+//            return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
+//        }
+//        catch(Exception e){
+//            BaseResponseDTO errorResponseDTO = new BaseResponseDTO(e.getMessage(),"ERROR", "List of License not Found: " + e.getMessage());
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponseDTO);
+//        }
+//    }
 
 
     @GetMapping("/getCustomerWithLicenses")
@@ -58,5 +59,19 @@ public class CustomerController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
         }
     }
+
+    @PatchMapping("/assignLicence")
+    public ResponseEntity<BaseResponseDTO> assignLicenceToCustomer(@RequestParam UUID customerId,
+                                                                   @RequestParam UUID licenceId) {
+        try {
+            CustomerDTO updatedCustomer = icustomer.assignLicenceAndSetStatus(customerId, licenceId);
+            BaseResponseDTO responseDTO = new BaseResponseDTO(updatedCustomer, "SUCCESS", "Licence assigned and status updated to PENDING.");
+            return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
+        } catch (RuntimeException e) {
+            BaseResponseDTO errorResponseDTO = new BaseResponseDTO(null, "ERROR", "Operation failed: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponseDTO);
+        }
+    }
+
 
 }
