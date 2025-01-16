@@ -5,9 +5,9 @@ import lombok.Data;
 
 import java.util.UUID;
 
-@Data
 @Entity
-public class Licence {
+@Data
+public class LicenseList {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -15,8 +15,4 @@ public class Licence {
 
     @Column(nullable = false)
     private String licenseName;
-
-//    @ManyToOne
-//    private  Customer customer;
-
 }

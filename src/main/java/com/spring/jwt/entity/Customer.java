@@ -39,15 +39,9 @@ public class Customer {
     @Column(nullable = false)
     private String pincode;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "license_option") // option is reserved keyword in MYSql , so it gets confused
-    private Option option; // NEW_LICENSE , RENEWAL
-
-    @Enumerated(EnumType.STRING)
-    private Status status ;
-
     @OneToMany( fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    private List<Licence> licence;
+    @Column(nullable = true)
+    private List<LicenseOfCustomer> licence;
 
 
 }
