@@ -1,5 +1,6 @@
 package com.spring.jwt.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -11,15 +12,22 @@ public class LicenseOfCustomer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID licenseID;
+    private UUID licenseOfCustomerId;
 
     @Column(nullable = false)
     private String licenseName;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Status status;
 
     @ManyToOne
-    private  Customer customer;
+    @JoinColumn(name = "customer_id")
+    @JsonBackReference
+    private Customer customer;
 
+    // Reference to a license in the LicenseList
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "license_id", nullable = false)
+    private LicenseList license;
 }

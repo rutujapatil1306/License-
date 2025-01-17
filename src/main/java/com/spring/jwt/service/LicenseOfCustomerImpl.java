@@ -30,13 +30,13 @@ public class LicenseOfCustomerImpl implements ILicenseOfCustomer {
     @Autowired
     private ModelMapper modelMapper;
 
-    @Override
-    public LicenseOfCustomerDTO saveLicense(LicenseOfCustomerDTO licenceDTO) {
-        LicenseOfCustomer licence = modelMapper.map(licenceDTO, LicenseOfCustomer.class);
-        licence.setStatus(Status.NO_STATUS);
-        LicenseOfCustomer savedLicense = licenseOfCustomerRepository.save(licence);
-        return modelMapper.map(licence, LicenseOfCustomerDTO.class);
-    }
+//    @Override
+//    public LicenseOfCustomerDTO saveLicense(LicenseOfCustomerDTO licenceDTO) {
+//        LicenseOfCustomer licence = modelMapper.map(licenceDTO, LicenseOfCustomer.class);
+//        licence.setStatus(Status.NO_STATUS);
+//        LicenseOfCustomer savedLicense = licenseOfCustomerRepository.save(licence);
+//        return modelMapper.map(licence, LicenseOfCustomerDTO.class);
+//    }
 
     @Override
     public List<LicenseOfCustomerDTO> getAllLicense() {

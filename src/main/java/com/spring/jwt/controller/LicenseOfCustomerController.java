@@ -20,18 +20,18 @@ public class LicenseOfCustomerController {
     @Autowired
     private ILicenseOfCustomer iLicenseOfCustomer;
 
-    @PostMapping("/saveLicense")
-    public ResponseEntity<BaseResponseDTO> saveLicense(@RequestBody LicenseOfCustomerDTO licenseOfCustomerDTO)
-    {
-        try {
-            LicenseOfCustomerDTO licenseOfCustomerDTO1 = iLicenseOfCustomer.saveLicense(licenseOfCustomerDTO);
-            BaseResponseDTO response = new BaseResponseDTO(licenseOfCustomerDTO1,"SUCCESS", "Application Added");
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
-        }catch (Exception e){
-            BaseResponseDTO errorResponse = new BaseResponseDTO(e.getMessage(),"ERROR", "An error occurred: ");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
-        }
-    }
+//    @PostMapping("/saveLicense")
+//    public ResponseEntity<BaseResponseDTO> saveLicense(@RequestBody LicenseOfCustomerDTO licenseOfCustomerDTO)
+//    {
+//        try {
+//            LicenseOfCustomerDTO licenseOfCustomerDTO1 = iLicenseOfCustomer.saveLicense(licenseOfCustomerDTO);
+//            BaseResponseDTO response = new BaseResponseDTO(licenseOfCustomerDTO1,"SUCCESS", "Application Added");
+//            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+//        }catch (Exception e){
+//            BaseResponseDTO errorResponse = new BaseResponseDTO(e.getMessage(),"ERROR", "An error occurred: ");
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+//        }
+//    }
 
     @GetMapping("/getAllLicense")
     public ResponseEntity<BaseResponseDTO> getAllLicense ()

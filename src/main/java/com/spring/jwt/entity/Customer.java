@@ -1,5 +1,6 @@
 package com.spring.jwt.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -39,8 +40,8 @@ public class Customer {
     @Column(nullable = false)
     private String pincode;
 
-    @OneToMany( fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @Column(nullable = true)
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<LicenseOfCustomer> licence;
 
 

@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface ILicenseOfCustomer {
 
-    LicenseOfCustomerDTO saveLicense(LicenseOfCustomerDTO administratorDTO);
+   // LicenseOfCustomerDTO saveLicense(LicenseOfCustomerDTO administratorDTO);
 
     List<LicenseOfCustomerDTO> getAllLicense();
 

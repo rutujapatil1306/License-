@@ -33,21 +33,6 @@ public class CustomerController {
 
     }
 
-//    @GetMapping("/creatingLicence")
-//     public ResponseEntity<BaseResponseDTO> createStatus(@RequestParam UUID customerId,
-//                                                         @RequestParam UUID liceneceId){
-//        try{
-//            CustomerDTO dto=icustomer.createStatus(customerId,liceneceId);
-//            BaseResponseDTO responseDTO=new BaseResponseDTO(dto,"SUCCESS","successfully go to the status");
-//            return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
-//        }
-//        catch(Exception e){
-//            BaseResponseDTO errorResponseDTO = new BaseResponseDTO(e.getMessage(),"ERROR", "List of License not Found: " + e.getMessage());
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponseDTO);
-//        }
-//    }
-
-
     @GetMapping("/getCustomerWithLicenses")
     public ResponseEntity<BaseResponseDTO> getCustomerWithLicenses(@RequestParam UUID customerId) {
         try {
