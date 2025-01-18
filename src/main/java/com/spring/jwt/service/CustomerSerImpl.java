@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -48,50 +49,6 @@ public class CustomerSerImpl implements ICustomer {
         return modelMapper.map(customer1, CustomerDTO.class);
     }
 
-//    @Override
-//    public CustomerDTO assignLicenceAndSetStatus(UUID customerId, UUID licenceId) {
-//        Customer customer = customerRepository.findById(customerId)
-//                .orElseThrow(() -> new RuntimeException("Customer not found with ID: " + customerId));
-//
-//        LicenseOfCustomer licence = licenceRepository.findById(licenceId)
-//                .orElseThrow(() -> new RuntimeException("Licence not found with ID: " + licenceId));
-//
-////        if (licence.getCustomer() != null && !licence.getCustomer().getCustomerId().equals(customerId)) {
-////            throw new RuntimeException("Licence is already assigned to another customer.");
-////        }
-//
-//        licence.setCustomer(customer);
-//
-//        if (customer.getLicence() == null) {
-//            customer.setLicence(new ArrayList<>());
-//        }
-//
-//        boolean licenceExists = false;
-//        for (LicenseOfCustomer existingLicence : customer.getLicence()) {
-//            if (existingLicence.getLicenseID().equals(licence.getLicenseID())) {
-//                licenceExists = true;
-//                break;
-//            }
-//        }
-//
-//        if (!licenceExists) {
-//            customer.getLicence().add(licence);
-//        }
-//
-//        licenceRepository.save(licence);
-//        Customer updatedCustomer = customerRepository.save(customer);
-//
-//        CustomerDTO customerDTO = modelMapper.map(updatedCustomer, CustomerDTO.class);
-//
-//        List<LicenseOfCustomerDTO> licenceDTOs = new ArrayList<>();
-//        for (LicenseOfCustomer lic : updatedCustomer.getLicence()) {
-//            LicenseOfCustomerDTO licenceDTO = modelMapper.map(lic, LicenseOfCustomerDTO.class);
-//            licenceDTOs.add(licenceDTO);
-//        }
-//        customerDTO.setLicenceDTOS(licenceDTOs);
-//
-//        return customerDTO;
-//    }
 
     @Override
     public CustomerDTO assignLicenceAndSetStatus(UUID customerId, UUID licenseID) {
@@ -104,42 +61,42 @@ public class CustomerSerImpl implements ICustomer {
                 .orElseThrow(() -> new RuntimeException("License not found with ID: " + licenseID));
 
         // Create a new LicenseOfCustomer entity to associate the license with the customer
-        LicenseOfCustomer licenseOfCustomer = new LicenseOfCustomer();
-        licenseOfCustomer.setLicense(licenseList); // Set the license reference
-        licenseOfCustomer.setCustomer(customer);  // Associate with the customer
-        licenseOfCustomer.setLicenseName(licenseList.getLicenseName()); // Set license name
-        licenseOfCustomer.setStatus(Status.PENDING); // Set initial status as PENDING
+        LicenseOfCustomer licenseOfCustomer1 = new LicenseOfCustomer();
+        licenseOfCustomer1.setLicense(licenseList); // Set the license reference
+        licenseOfCustomer1.setCustomer(customer);  // Associate with the customer
+        licenseOfCustomer1.setLicenseName(licenseList.getLicenseName()); // Set license name
+        licenseOfCustomer1.setStatus(Status.PENDING); // Set initial status as PENDING
 
         // Save the LicenseOfCustomer entity
-        licenseOfCustomerRepository.save(licenseOfCustomer);
+        licenseOfCustomerRepository.save(licenseOfCustomer1);
 
-        // Update the customer's license list if needed (optional, depending on cascade settings)
+        // Update the customer's license list if needed
         if (customer.getLicence() == null) {
             customer.setLicence(new ArrayList<>());
         }
-        customer.getLicence().add(licenseOfCustomer);
+        customer.getLicence().add(licenseOfCustomer1);
 
         // Save the updated customer
         Customer updatedCustomer = customerRepository.save(customer);
 
-        // Map the updated customer entity to a DTO
+        // Map the updated customer entity to a DTO using ModelMapper
         CustomerDTO customerDTO = modelMapper.map(updatedCustomer, CustomerDTO.class);
 
-        // Map licenses to LicenseOfCustomerDTO using a for loop
+        // Manually map licenses to LicenseOfCustomerDTO to exclude LicenseList details
         List<LicenseOfCustomerDTO> licenceDTOs = new ArrayList<>();
         for (LicenseOfCustomer lic : updatedCustomer.getLicence()) {
-            LicenseOfCustomerDTO licenceDTO = modelMapper.map(lic, LicenseOfCustomerDTO.class);
+            LicenseOfCustomerDTO licenceDTO = new LicenseOfCustomerDTO();
+            licenceDTO.setLicenseOfCustomerId(lic.getLicenseOfCustomerId());
+            licenceDTO.setLicenseName(lic.getLicenseName());
+            licenceDTO.setStatus(lic.getStatus());
             licenceDTOs.add(licenceDTO);
         }
 
-        // Set the license DTOs in the customer DTO
+        // Set the filtered license DTOs in the customer DTO
         customerDTO.setLicenceDTOS(licenceDTOs);
 
         return customerDTO;
     }
-
-
-
 
     @Override
     public CustomerDTO getCustomerWithLicenses(UUID customerId) {
@@ -157,6 +114,34 @@ public class CustomerSerImpl implements ICustomer {
         customer.setLicence(licenceDTOs);
         return customerDTO;
     }
+
+    public List<CustomerDTO> getAllCustomers() {
+        List<Customer> customers = customerRepository.findAll();
+
+        List<CustomerDTO> customerDTOs = new ArrayList<>();
+        for (Customer customer : customers) {
+
+            CustomerDTO customerDTO = modelMapper.map(customer, CustomerDTO.class);
+
+            List<LicenseOfCustomerDTO> licenceDTOs = new ArrayList<>();
+            for (LicenseOfCustomer licenseOfCustomer : customer.getLicence()) {
+                LicenseOfCustomerDTO licenceDTO = modelMapper.map(licenseOfCustomer, LicenseOfCustomerDTO.class);
+                licenceDTOs.add(licenceDTO);
+            }
+
+            customerDTO.setLicenceDTOS(licenceDTOs);
+            customerDTOs.add(customerDTO);
+        }
+
+        return customerDTOs;
+    }
+
+
+
+
+
+
+
 }
 
 

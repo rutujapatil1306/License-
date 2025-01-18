@@ -30,38 +30,11 @@ public class LicenseOfCustomerImpl implements ILicenseOfCustomer {
     @Autowired
     private ModelMapper modelMapper;
 
-//    @Override
-//    public LicenseOfCustomerDTO saveLicense(LicenseOfCustomerDTO licenceDTO) {
-//        LicenseOfCustomer licence = modelMapper.map(licenceDTO, LicenseOfCustomer.class);
-//        licence.setStatus(Status.NO_STATUS);
-//        LicenseOfCustomer savedLicense = licenseOfCustomerRepository.save(licence);
-//        return modelMapper.map(licence, LicenseOfCustomerDTO.class);
-//    }
-
     @Override
-    public List<LicenseOfCustomerDTO> getAllLicense() {
-        List<LicenseOfCustomer> licenseList = licenseOfCustomerRepository.findAll();
-        List<LicenseOfCustomerDTO> dtoList = new ArrayList<>();
+    public CustomerDTO updateStatus(UUID licenseOfCustomerId) {
 
-        for (LicenseOfCustomer license : licenseList) {
-            LicenseOfCustomerDTO dto = modelMapper.map(license, LicenseOfCustomerDTO.class);
-            dtoList.add(dto);
-        }
-        return dtoList;
-    }
-
-    @Override
-    public LicenseOfCustomerDTO getById(UUID id) {
-        LicenseOfCustomer l=licenseOfCustomerRepository.getById(id);
-        LicenseOfCustomerDTO li=modelMapper.map(l, LicenseOfCustomerDTO.class);
-        return li;
-    }
-
-    @Override
-    public CustomerDTO updateStatus(UUID licenseID) {
-        // Fetch the licence by ID
-        LicenseOfCustomer licence = licenseOfCustomerRepository.findById(licenseID)
-                .orElseThrow(() -> new RuntimeException("Licence not found with ID: " + licenseID));
+        LicenseOfCustomer licence = licenseOfCustomerRepository.findById(licenseOfCustomerId)
+                .orElseThrow(() -> new RuntimeException("Licence not found with ID: " + licenseOfCustomerId));
 
         if (licence.getStatus() == Status.PENDING) {
             licence.setStatus(Status.ACTIVE);
@@ -70,7 +43,7 @@ public class LicenseOfCustomerImpl implements ILicenseOfCustomer {
         }
         licenseOfCustomerRepository.save(licence);
 
-        Customer customer = licence.getCustomer(); // Assuming Licence has a `getCustomer()` method
+        Customer customer = licence.getCustomer();
 
         if (customer == null) {
             throw new RuntimeException("No associated customer found for this licence");
@@ -83,9 +56,7 @@ public class LicenseOfCustomerImpl implements ILicenseOfCustomer {
             LicenseOfCustomerDTO licenceDTO = modelMapper.map(customerLicence, LicenseOfCustomerDTO.class);
             licenceDTOS.add(licence);
         }
-
         customer.setLicence(licenceDTOS);
-
         return customerDTO;
     }
 

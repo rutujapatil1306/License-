@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -32,6 +33,19 @@ public class CustomerController {
         }
 
     }
+
+    @GetMapping("/getAllCustomer")
+    public ResponseEntity<BaseResponseDTO> getAllCustomer() {
+        try {
+            List<CustomerDTO> customers = icustomer.getAllCustomers();
+            BaseResponseDTO response = new BaseResponseDTO(customers,"SUCCESS","Customers retrieved successfully");
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            BaseResponseDTO errorResponse = new BaseResponseDTO(e.getMessage(),"ERROR","Failed to retrieve customers: ");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+    }
+
 
     @GetMapping("/getCustomerWithLicenses")
     public ResponseEntity<BaseResponseDTO> getCustomerWithLicenses(@RequestParam UUID customerId) {

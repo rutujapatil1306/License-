@@ -45,7 +45,7 @@ private ILicenseList iLicenseList;
         }
     }
 
-    @DeleteMapping("/deleteLicenseList/{id}")
+    @DeleteMapping("/deleteLicenseList")
     public ResponseEntity<BaseResponseDTO> deleteLicenseList(@RequestParam UUID licenseListID) {
         try {
             iLicenseList.deleteLicenseById(licenseListID);

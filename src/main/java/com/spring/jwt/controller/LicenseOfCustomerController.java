@@ -20,47 +20,6 @@ public class LicenseOfCustomerController {
     @Autowired
     private ILicenseOfCustomer iLicenseOfCustomer;
 
-//    @PostMapping("/saveLicense")
-//    public ResponseEntity<BaseResponseDTO> saveLicense(@RequestBody LicenseOfCustomerDTO licenseOfCustomerDTO)
-//    {
-//        try {
-//            LicenseOfCustomerDTO licenseOfCustomerDTO1 = iLicenseOfCustomer.saveLicense(licenseOfCustomerDTO);
-//            BaseResponseDTO response = new BaseResponseDTO(licenseOfCustomerDTO1,"SUCCESS", "Application Added");
-//            return ResponseEntity.status(HttpStatus.CREATED).body(response);
-//        }catch (Exception e){
-//            BaseResponseDTO errorResponse = new BaseResponseDTO(e.getMessage(),"ERROR", "An error occurred: ");
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
-//        }
-//    }
-
-    @GetMapping("/getAllLicense")
-    public ResponseEntity<BaseResponseDTO> getAllLicense ()
-    {
-        try{
-            List<LicenseOfCustomerDTO> licenseOfCustomerDTOList = iLicenseOfCustomer.getAllLicense();
-            BaseResponseDTO response = new BaseResponseDTO(licenseOfCustomerDTOList,"SUCCESS", "List of All License");
-            return ResponseEntity.status(HttpStatus.FOUND).body(response);
-        }catch (Exception e){
-            BaseResponseDTO errorResponseDTO = new BaseResponseDTO(e.getMessage(),"ERROR","List of License not Found:");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponseDTO);
-        }
-
-    }
-
-    @GetMapping("/getById")
-     public ResponseEntity<BaseResponseDTO> getById(@RequestParam UUID id){
-       try{
-           LicenseOfCustomerDTO licenseOfCustomerDTO = iLicenseOfCustomer.getById(id);
-           BaseResponseDTO response=new BaseResponseDTO(licenseOfCustomerDTO,"Success","Licence get Successfully");
-           return ResponseEntity.status(HttpStatus.FOUND).body(response);
-       }
-       catch(Exception e){
-           BaseResponseDTO errorResponseDTO = new BaseResponseDTO(e.getMessage(),"ERROR", "List of License not Found");
-           return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponseDTO);
-
-       }
-    }
-
     @PatchMapping("/updateStatus")
     public ResponseEntity<BaseResponseDTO> updateStatus(@RequestParam UUID licenseID){
         try{

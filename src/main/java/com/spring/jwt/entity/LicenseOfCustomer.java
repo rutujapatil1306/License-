@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Data
@@ -26,7 +27,7 @@ public class LicenseOfCustomer {
     @JsonBackReference
     private Customer customer;
 
-    // Reference to a license in the LicenseList
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "license_id", nullable = false)
     private LicenseList license;

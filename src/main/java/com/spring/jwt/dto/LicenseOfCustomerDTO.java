@@ -5,6 +5,7 @@ import com.spring.jwt.entity.LicenseList;
 import com.spring.jwt.entity.Status;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Data
@@ -16,9 +17,8 @@ public class LicenseOfCustomerDTO {
 
         private Status status;
 
-        private Customer customer;
-
-        private LicenseList license;
+//       private Customer customer;
+//        private LicenseList license;
     }
 
     // private CustomerDTO customerDTO;
