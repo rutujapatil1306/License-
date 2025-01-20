@@ -1,9 +1,5 @@
 package com.spring.jwt.dto;
 
-import com.spring.jwt.entity.Licence;
-import com.spring.jwt.entity.Option;
-import com.spring.jwt.entity.Status;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -36,11 +32,7 @@ public class CustomerDTO {
 
     private String pincode;
 
-    private Option option;
-
-    private Status status;
-
-    private List<LicenceDTO> licenceDTOS;
+    private List<LicenseOfCustomerDTO> licenceDTOS;
 }
 
 

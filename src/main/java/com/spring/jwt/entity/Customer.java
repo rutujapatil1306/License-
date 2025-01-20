@@ -1,5 +1,6 @@
 package com.spring.jwt.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -39,15 +40,9 @@ public class Customer {
     @Column(nullable = false)
     private String pincode;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "license_option") // option is reserved keyword in MYSql , so it gets confused
-    private Option option; // NEW_LICENSE , RENEWAL
-
-    @Enumerated(EnumType.STRING)
-    private Status status ;
-
-    @OneToMany( fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    private List<Licence> licence;
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<LicenseOfCustomer> licence;
 
 
 }

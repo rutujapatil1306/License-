@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -33,19 +34,17 @@ public class CustomerController {
 
     }
 
-//    @GetMapping("/creatingLicence")
-//     public ResponseEntity<BaseResponseDTO> createStatus(@RequestParam UUID customerId,
-//                                                         @RequestParam UUID liceneceId){
-//        try{
-//            CustomerDTO dto=icustomer.createStatus(customerId,liceneceId);
-//            BaseResponseDTO responseDTO=new BaseResponseDTO(dto,"SUCCESS","successfully go to the status");
-//            return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
-//        }
-//        catch(Exception e){
-//            BaseResponseDTO errorResponseDTO = new BaseResponseDTO(e.getMessage(),"ERROR", "List of License not Found: " + e.getMessage());
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponseDTO);
-//        }
-//    }
+    @GetMapping("/getAllCustomer")
+    public ResponseEntity<BaseResponseDTO> getAllCustomer() {
+        try {
+            List<CustomerDTO> customers = icustomer.getAllCustomers();
+            BaseResponseDTO response = new BaseResponseDTO(customers,"SUCCESS","Customers retrieved successfully");
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            BaseResponseDTO errorResponse = new BaseResponseDTO(e.getMessage(),"ERROR","Failed to retrieve customers: ");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+    }
 
 
     @GetMapping("/getCustomerWithLicenses")
@@ -72,6 +71,8 @@ public class CustomerController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponseDTO);
         }
     }
+
+
 
 
 }
