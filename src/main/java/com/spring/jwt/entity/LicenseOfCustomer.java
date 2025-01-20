@@ -13,6 +13,7 @@ public class LicenseOfCustomer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(columnDefinition = "CHAR(36)")
     private UUID licenseOfCustomerId;
 
     @Column(nullable = false)

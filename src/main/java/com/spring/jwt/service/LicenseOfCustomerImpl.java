@@ -60,8 +60,15 @@ public class LicenseOfCustomerImpl implements ILicenseOfCustomer {
         return customerDTO;
     }
 
-
-
+    @Override
+    public List<LicenseOfCustomerDTO> findByStatus(String status) {
+        List<LicenseOfCustomer> ll=licenseOfCustomerRepository.findByStatus(status);
+        List<LicenseOfCustomerDTO> li=new ArrayList<>();
+        for(LicenseOfCustomer  ofCustomer:ll){
+            li.add(modelMapper.map(ofCustomer,LicenseOfCustomerDTO.class));
+        }
+        return li;
+    }
 
 
 }

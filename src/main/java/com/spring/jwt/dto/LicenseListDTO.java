@@ -13,5 +13,5 @@ public class LicenseListDTO {
 
     private String licenseName;
 
-    private List<LicenseOfCustomer> licence;
+  //  private List<LicenseOfCustomer> licence;
 }

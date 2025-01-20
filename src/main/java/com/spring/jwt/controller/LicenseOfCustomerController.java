@@ -33,4 +33,15 @@ public class LicenseOfCustomerController {
         }
     }
 
+    @GetMapping("/byStatus")
+    public ResponseEntity<BaseResponseDTO> statusBy(@RequestParam String status) {
+        try {
+            List<LicenseOfCustomerDTO> co = iLicenseOfCustomer.findByStatus(status);
+            BaseResponseDTO bs = new BaseResponseDTO(co, "ALL OK", "By Status Get successfully");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bs);
+        } catch (Exception e) {
+            BaseResponseDTO errorResponseDTO = new BaseResponseDTO(e.getMessage(), "Error", "Status Not updated");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponseDTO);
+        }
+    }
 }

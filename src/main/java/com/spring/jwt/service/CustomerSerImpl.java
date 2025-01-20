@@ -137,11 +137,53 @@ public class CustomerSerImpl implements ICustomer {
     }
 
 
+    @Override
+    public List<CustomerDTO> searchCustomerByName(String name) {
+        List<Customer> foundCustomers = customerRepository.findByNameContainingIgnoreCaseOrderByNameAsc(name);
+        System.out.println(foundCustomers.size());
+        // Convert List<Customer> to List<CustomerDTO> using ModelMapper
+        List<CustomerDTO> customerDTOs = new ArrayList<>();
+        for (Customer customer : foundCustomers) {
+            CustomerDTO dto = modelMapper.map(customer, CustomerDTO.class);
+            customerDTOs.add(dto);
+        }
+        return customerDTOs; // Return the list of DTOs
+    }
 
+    @Override
+    public List<CustomerDTO> getByFilter(String name, String area, String email) {
+        List<Customer> customerList;
 
+        if (name != null) {
+            customerList = customerRepository.findByName(name);
+        } else if (area != null) {
+            customerList = customerRepository.findByArea(area);
+        } else if (email != null) {
+            customerList = customerRepository.findByEmail(email);
+        } else {
+            customerList = customerRepository.findAll();
+        }
 
+        // Log size for debugging purposes (can be removed or replaced with a logger)
+        System.out.println("Number of customers found: " + customerList.size());
+
+        // Convert to DTOs
+        return mapToDTOList(customerList);
+    }
+
+    // Helper method to map Customer entities to DTOs
+    private List<CustomerDTO> mapToDTOList(List<Customer> customers) {
+        List<CustomerDTO> customerDTOList = new ArrayList<>();
+        for (Customer customer : customers) {
+            customerDTOList.add(modelMapper.map(customer, CustomerDTO.class));
+        }
+        return customerDTOList;
+    }
 
 
 }
+
+
+
 
 

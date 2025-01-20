@@ -9,4 +9,6 @@ import java.util.UUID;
 public interface ILicenseOfCustomer {
 
     CustomerDTO updateStatus(UUID licenseID);
+
+    List<LicenseOfCustomerDTO> findByStatus(String status);
 }
