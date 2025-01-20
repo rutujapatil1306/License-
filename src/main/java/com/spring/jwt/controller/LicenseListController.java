@@ -33,7 +33,7 @@ private ILicenseList iLicenseList;
     }
 
     @GetMapping("/getLicenseList")
-    public ResponseEntity<BaseResponseDTO>  getLicenseList()
+    public ResponseEntity<BaseResponseDTO> getLicenseList()
     {
         try{
             List<LicenseListDTO> licenseListDTOS = iLicenseList.getAllLicense();
@@ -56,9 +56,4 @@ private ILicenseList iLicenseList;
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
-
-
-
-
-
 }
