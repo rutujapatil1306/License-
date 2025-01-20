@@ -2,6 +2,7 @@ package com.spring.jwt.Interfaces;
 
 import com.spring.jwt.dto.CustomerDTO;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface ICustomer {
@@ -12,4 +13,8 @@ public interface ICustomer {
     CustomerDTO getCustomerWithLicenses(UUID customerId);
 
     CustomerDTO assignLicenceAndSetStatus(UUID customerId, UUID licenceId);
+
+    List<CustomerDTO> searchCustomerByName(String name);
+
+
 }

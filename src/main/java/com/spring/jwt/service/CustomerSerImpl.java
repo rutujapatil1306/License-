@@ -5,7 +5,6 @@ import com.spring.jwt.dto.CustomerDTO;
 import com.spring.jwt.dto.LicenceDTO;
 import com.spring.jwt.entity.Customer;
 import com.spring.jwt.entity.Licence;
-import com.spring.jwt.entity.Option;
 import com.spring.jwt.entity.Status;
 import com.spring.jwt.repository.CustomerRepository;
 import com.spring.jwt.repository.LicenceRepository;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class CustomerSerImpl implements ICustomer {
@@ -69,7 +67,7 @@ public class CustomerSerImpl implements ICustomer {
             LicenceDTO licenceDTO = modelMapper.map(licence, LicenceDTO.class);
             licenceDTOs.add(licenceDTO);
         }
-        customerDTO.setLicenceDTOS(licenceDTOs);
+        customerDTO.setLicence(licenceDTOs);
         return customerDTO;
     }
 
@@ -90,6 +88,20 @@ public class CustomerSerImpl implements ICustomer {
         return modelMapper.map(updatedCustomer, CustomerDTO.class);
     }
 
+
+    @Override
+    public List<CustomerDTO> searchCustomerByName(String name) {
+        List<Customer> foundCustomers = customerRepository.findByNameContainingIgnoreCaseOrderByNameAsc(name);
+        System.out.println(foundCustomers.size());
+        // Convert List<Customer> to List<CustomerDTO> using ModelMapper
+        List<CustomerDTO> customerDTOs = new ArrayList<>();
+        for (Customer customer : foundCustomers) {
+            CustomerDTO dto = modelMapper.map(customer, CustomerDTO.class);
+            customerDTOs.add(dto);
+        }
+
+        return customerDTOs; // Return the list of DTOs
+    }
 
 
 

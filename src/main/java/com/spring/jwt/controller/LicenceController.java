@@ -1,6 +1,8 @@
 package com.spring.jwt.controller;
 
+import com.spring.jwt.Interfaces.ICustomer;
 import com.spring.jwt.Interfaces.ILicence;
+import com.spring.jwt.dto.CustomerDTO;
 import com.spring.jwt.dto.LicenceDTO;
 import com.spring.jwt.utils.BaseResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,11 @@ public class LicenceController {
 
     @Autowired
     private ILicence iAdministrator;
+
+    @Autowired
+    private ICustomer iCustomer;
+
+
 
     @PostMapping("/saveLicense")
     public ResponseEntity<BaseResponseDTO> saveLicense(@RequestBody LicenceDTO administratorDTO)
@@ -61,5 +68,4 @@ public class LicenceController {
     }
 
 
-
-}
+   }

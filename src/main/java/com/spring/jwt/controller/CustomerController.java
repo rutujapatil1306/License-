@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -71,7 +72,36 @@ public class CustomerController {
             BaseResponseDTO errorResponseDTO = new BaseResponseDTO(null, "ERROR", "Operation failed: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponseDTO);
         }
+
+
     }
 
 
+//    @GetMapping("/getByName")
+//    public ResponseEntity<BaseResponseDTO> getCustomerByName(@RequestParam String customerName){
+//        try{
+//            List<CustomerDTO>  customer=icustomer.searchCustomerByName(customerName);
+//            BaseResponseDTO responseDTO = new BaseResponseDTO(updatedCustomer, "SUCCESS", "Licence assigned and status updated to PENDING.");
+//            return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
+//
+//        }
+       // catch (Exception e){
+@GetMapping("/getByName")
+public ResponseEntity<BaseResponseDTO> getCustomerByName(@RequestParam String customerName) {
+    try {
+        List<CustomerDTO> customers = icustomer.searchCustomerByName(customerName);
+        return ResponseEntity.ok(new BaseResponseDTO(customers, "SUCCESS", "Customers fetched successfully."));
+    } catch (IllegalArgumentException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new BaseResponseDTO(null, "ERROR", e.getMessage()));
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new BaseResponseDTO(null, "ERROR", e.getMessage()));
+    }
 }
+
+
+        }
+
+   // }
+
