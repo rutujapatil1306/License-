@@ -9,5 +9,5 @@ import java.util.UUID;
 @Repository
 public interface LicenseOfCustomerRepository extends JpaRepository<LicenseOfCustomer, UUID> {
 
-    LicenseOfCustomer getById(UUID licenceId);
+    LicenseOfCustomer getById(UUID licenseOfCustomerId);
 }

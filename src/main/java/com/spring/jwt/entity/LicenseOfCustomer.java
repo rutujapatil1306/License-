@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -22,11 +23,16 @@ public class LicenseOfCustomer {
     @Column(nullable = false)
     private Status status;
 
+  //  @Column(nullable = false)
+    private LocalDate issueDate;
+
+//    @Column(nullable = false)
+    private LocalDate expiryDate;
+
     @ManyToOne
     @JoinColumn(name = "customer_id")
     @JsonBackReference
     private Customer customer;
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "license_id", nullable = false)
