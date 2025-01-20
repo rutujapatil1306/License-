@@ -14,4 +14,6 @@ public interface ILicenseList  {
     void deleteLicenseById(UUID licenseListID);
 
     LicenseListDTO getLicenseListByID(UUID licenseID);
+
+    LicenseListDTO updateLicence(UUID licenseID, LicenseListDTO licenceDTO);
 }
