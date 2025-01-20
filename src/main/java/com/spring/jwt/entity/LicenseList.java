@@ -3,11 +3,12 @@ package com.spring.jwt.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
 import java.util.UUID;
 
-@Data
 @Entity
-public class Licence {
+@Data
+public class LicenseList {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -16,7 +17,5 @@ public class Licence {
     @Column(nullable = false)
     private String licenseName;
 
-//    @ManyToOne
-//    private  Customer customer;
 
 }

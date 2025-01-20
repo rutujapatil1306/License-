@@ -14,7 +14,5 @@ public interface ICustomer {
 
     CustomerDTO assignLicenceAndSetStatus(UUID customerId, UUID licenceId);
 
-    List<CustomerDTO> searchCustomerByName(String name);
-
-
+    List<CustomerDTO> getAllCustomers();
 }
