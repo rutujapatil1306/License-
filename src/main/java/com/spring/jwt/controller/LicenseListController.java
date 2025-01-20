@@ -70,4 +70,16 @@ private ILicenseList iLicenseList;
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
+
+    @PatchMapping("/UpdateLicense")
+    public ResponseEntity<BaseResponseDTO> updateLicence(@RequestParam UUID licenseID, @RequestBody LicenseListDTO licenceDTO){
+        try {
+            LicenseListDTO licenceDTO1 = iLicenseList.updateLicence(licenseID, licenceDTO);
+            BaseResponseDTO LicenceUpdate = new BaseResponseDTO(licenceDTO1,"SUCCESS TO UPDATE", "License Update Successfully");
+            return ResponseEntity.status(HttpStatus.FOUND).body(LicenceUpdate);
+        }catch (Exception e){
+            BaseResponseDTO LicenceUpdate= new BaseResponseDTO(e.getMessage(),"ERROR","Failed To Update License");
+            return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(LicenceUpdate);
+        }
+    }
 }
