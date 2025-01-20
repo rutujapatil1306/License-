@@ -17,5 +17,8 @@ public class LicenseList {
     @Column(nullable = false)
     private String licenseName;
 
+    @Column(nullable = false)
+    private Integer validTill;
+
 
 }

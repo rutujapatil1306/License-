@@ -52,37 +52,31 @@ public class CustomerSerImpl implements ICustomer {
 
     @Override
     public CustomerDTO assignLicenceAndSetStatus(UUID customerId, UUID licenseID) {
-        // Fetch the customer by ID or throw an exception if not found
+
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new RuntimeException("Customer not found with ID: " + customerId));
 
-        // Fetch the license by ID or throw an exception if not found
         LicenseList licenseList = licenseListRepository.findById(licenseID)
                 .orElseThrow(() -> new RuntimeException("License not found with ID: " + licenseID));
 
-        // Create a new LicenseOfCustomer entity to associate the license with the customer
         LicenseOfCustomer licenseOfCustomer1 = new LicenseOfCustomer();
-        licenseOfCustomer1.setLicense(licenseList); // Set the license reference
-        licenseOfCustomer1.setCustomer(customer);  // Associate with the customer
-        licenseOfCustomer1.setLicenseName(licenseList.getLicenseName()); // Set license name
-        licenseOfCustomer1.setStatus(Status.PENDING); // Set initial status as PENDING
+        licenseOfCustomer1.setLicense(licenseList);
+        licenseOfCustomer1.setCustomer(customer);
+        licenseOfCustomer1.setLicenseName(licenseList.getLicenseName());
 
-        // Save the LicenseOfCustomer entity
+        licenseOfCustomer1.setStatus(Status.PENDING);
+
         licenseOfCustomerRepository.save(licenseOfCustomer1);
 
-        // Update the customer's license list if needed
         if (customer.getLicence() == null) {
             customer.setLicence(new ArrayList<>());
         }
         customer.getLicence().add(licenseOfCustomer1);
 
-        // Save the updated customer
         Customer updatedCustomer = customerRepository.save(customer);
 
-        // Map the updated customer entity to a DTO using ModelMapper
         CustomerDTO customerDTO = modelMapper.map(updatedCustomer, CustomerDTO.class);
 
-        // Manually map licenses to LicenseOfCustomerDTO to exclude LicenseList details
         List<LicenseOfCustomerDTO> licenceDTOs = new ArrayList<>();
         for (LicenseOfCustomer lic : updatedCustomer.getLicence()) {
             LicenseOfCustomerDTO licenceDTO = new LicenseOfCustomerDTO();
@@ -91,10 +85,7 @@ public class CustomerSerImpl implements ICustomer {
             licenceDTO.setStatus(lic.getStatus());
             licenceDTOs.add(licenceDTO);
         }
-
-        // Set the filtered license DTOs in the customer DTO
         customerDTO.setLicenceDTOS(licenceDTOs);
-
         return customerDTO;
     }
 

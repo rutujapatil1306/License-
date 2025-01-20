@@ -42,11 +42,23 @@ public class LicenseListImpl implements ILicenseList {
         return dtoList;
     }
 
+
+
     @Override
     public void deleteLicenseById(UUID licenseListID) {
         LicenseList license = licenseListRepository.findById(licenseListID)
-                .orElseThrow(() -> new RuntimeException("License with ID " + licenseListID + " not found"));
+                .orElseThrow(() -> new RuntimeException("License with ID " + licenseListID + "Deleted"));
         licenseListRepository.delete(license);
+    }
+
+    @Override
+    public LicenseListDTO getLicenseListByID(UUID licenseID) {
+
+        LicenseList licenseList = licenseListRepository.findById(licenseID)
+                .orElseThrow(() -> new RuntimeException("License with ID " +licenseID + "Not Found"));
+
+        return modelMapper.map(licenseList, LicenseListDTO.class);
+
     }
 
 

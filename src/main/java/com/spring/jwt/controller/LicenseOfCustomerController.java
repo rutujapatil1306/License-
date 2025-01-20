@@ -21,9 +21,9 @@ public class LicenseOfCustomerController {
     private ILicenseOfCustomer iLicenseOfCustomer;
 
     @PatchMapping("/updateStatus")
-    public ResponseEntity<BaseResponseDTO> updateStatus(@RequestParam UUID licenseID){
+    public ResponseEntity<BaseResponseDTO> updateStatus(@RequestParam UUID licenseOfCustomerId){
         try{
-            CustomerDTO customerDTO = iLicenseOfCustomer.updateStatus(licenseID);
+            CustomerDTO customerDTO = iLicenseOfCustomer.updateStatus(licenseOfCustomerId);
             BaseResponseDTO response = new BaseResponseDTO(customerDTO,"Success","Status Updated Successfully");
             return ResponseEntity.status(HttpStatus.OK).body(response);
         }

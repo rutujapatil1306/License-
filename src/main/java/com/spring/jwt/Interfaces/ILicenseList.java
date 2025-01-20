@@ -12,4 +12,6 @@ public interface ILicenseList  {
     List<LicenseListDTO> getAllLicense();
 
     void deleteLicenseById(UUID licenseListID);
+
+    LicenseListDTO getLicenseListByID(UUID licenseID);
 }

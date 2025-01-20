@@ -38,10 +38,24 @@ private ILicenseList iLicenseList;
         try{
             List<LicenseListDTO> licenseListDTOS = iLicenseList.getAllLicense();
             BaseResponseDTO response = new BaseResponseDTO(licenseListDTOS,"SUCCESS", "List of All License");
-            return ResponseEntity.status(HttpStatus.FOUND).body(response);
+            return ResponseEntity.status(HttpStatus.OK).body(response);
         }catch (Exception e){
             BaseResponseDTO errorResponseDTO = new BaseResponseDTO(e.getMessage(),"ERROR","List of License not Found:");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponseDTO);
+        }
+    }
+
+    @GetMapping("/getLicenseListByID")
+    public ResponseEntity<BaseResponseDTO> getLicenseListByID (@RequestParam UUID LicenseID)
+    {
+        try{
+            LicenseListDTO licenseListDTO = iLicenseList.getLicenseListByID(LicenseID);
+            BaseResponseDTO response = new BaseResponseDTO(licenseListDTO,"SUCCESS", "License Found BY ID");
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        }catch (Exception e){
+            BaseResponseDTO errorResponseDTO = new BaseResponseDTO(e.getMessage(),"ERROR"," License not Found By ID:" + LicenseID);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponseDTO);
+
         }
     }
 
