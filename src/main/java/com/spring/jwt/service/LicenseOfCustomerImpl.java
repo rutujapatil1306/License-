@@ -59,10 +59,5 @@ public class LicenseOfCustomerImpl implements ILicenseOfCustomer {
         customer.setLicence(licenceDTOS);
         return customerDTO;
     }
-
-
-
-
-
 }
 

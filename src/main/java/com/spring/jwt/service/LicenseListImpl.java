@@ -27,7 +27,7 @@ public class LicenseListImpl implements ILicenseList {
     {
         LicenseList licenseList = modelMapper.map(licenseListDTO, LicenseList.class);
         LicenseList saveLicense = licenseListRepository.save(licenseList);
-        return modelMapper.map(licenseList, LicenseListDTO.class);
+        return modelMapper.map(saveLicense, LicenseListDTO.class);
     }
 
     @Override
@@ -47,6 +47,18 @@ public class LicenseListImpl implements ILicenseList {
         LicenseList license = licenseListRepository.findById(licenseListID)
                 .orElseThrow(() -> new RuntimeException("License with ID " + licenseListID + " not found"));
         licenseListRepository.delete(license);
+    }
+
+    @Override
+    public LicenseListDTO updateLicence(UUID licenseID, LicenseListDTO licenceDTO) {
+        LicenseList licence= modelMapper.map(licenceDTO,LicenseList.class);
+        LicenseList findedLicence= licenseListRepository.findById(licenseID).orElseThrow(() -> new RuntimeException("Id Not Found Exception"));
+
+        if(licenceDTO.getLicenseName()!=null){
+            findedLicence.setLicenseName(licenceDTO.getLicenseName());
+        }
+        LicenseList UpdatedLicense=licenseListRepository.save(findedLicence);
+        return modelMapper.map(UpdatedLicense,LicenseListDTO.class);
     }
 
 
